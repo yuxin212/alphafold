@@ -148,7 +148,7 @@ class AlphaFoldIteration(hk.Module):
                is_training,
                compute_loss=False,
                ensemble_representations=False,
-               return_representations=False):
+               return_representations=True):
 
     num_ensemble = jnp.asarray(ensembled_batch['seq_length'].shape[0])
 
@@ -223,6 +223,7 @@ class AlphaFoldIteration(hk.Module):
     total_loss = 0.
     ret = {}
     ret['representations'] = representations
+    return ret['representations']
 
     def loss(module, head_config, ret, name, filter_ret=True):
       if filter_ret:
@@ -391,8 +392,8 @@ class AlphaFold(hk.Module):
     if compute_loss:
       ret = ret[0], [ret[1]]
 
-    if not return_representations:
-      del (ret[0] if compute_loss else ret)['representations']  # pytype: disable=unsupported-operands
+    # if not return_representations:
+    #   del (ret[0] if compute_loss else ret)['representations']  # pytype: disable=unsupported-operands
     return ret
 
 

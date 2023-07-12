@@ -289,27 +289,27 @@ def predict_structure(
         'Total JAX model %s on %s predict time (includes compilation time, see --benchmark): %.1fs',
         model_name, fasta_name, t_diff)
 
-    if benchmark:
-      t_0 = time.time()
-      model_runner.predict(processed_feature_dict,
-                           random_seed=model_random_seed)
-      t_diff = time.time() - t_0
-      timings[f'predict_benchmark_{model_name}'] = t_diff
-      logging.info(
-          'Total JAX model %s on %s predict time (excludes compilation time): %.1fs',
-          model_name, fasta_name, t_diff)
+    # if benchmark:
+    #   t_0 = time.time()
+    #   model_runner.predict(processed_feature_dict,
+    #                        random_seed=model_random_seed)
+    #   t_diff = time.time() - t_0
+    #   timings[f'predict_benchmark_{model_name}'] = t_diff
+    #   logging.info(
+    #       'Total JAX model %s on %s predict time (excludes compilation time): %.1fs',
+    #       model_name, fasta_name, t_diff)
 
-    plddt = prediction_result['plddt']
-    _save_confidence_json_file(plddt, output_dir, model_name)
-    ranking_confidences[model_name] = prediction_result['ranking_confidence']
+    # plddt = prediction_result['plddt']
+    # _save_confidence_json_file(plddt, output_dir, model_name)
+    # ranking_confidences[model_name] = prediction_result['ranking_confidence']
 
-    if (
-        'predicted_aligned_error' in prediction_result
-        and 'max_predicted_aligned_error' in prediction_result
-    ):
-      pae = prediction_result['predicted_aligned_error']
-      max_pae = prediction_result['max_predicted_aligned_error']
-      _save_pae_json_file(pae, float(max_pae), output_dir, model_name)
+    # if (
+    #     'predicted_aligned_error' in prediction_result
+    #     and 'max_predicted_aligned_error' in prediction_result
+    # ):
+    #   pae = prediction_result['predicted_aligned_error']
+    #   max_pae = prediction_result['max_predicted_aligned_error']
+    #   _save_pae_json_file(pae, float(max_pae), output_dir, model_name)
 
     # Remove jax dependency from results.
     np_prediction_result = _jnp_to_np(dict(prediction_result))
@@ -318,6 +318,8 @@ def predict_structure(
     result_output_path = os.path.join(output_dir, f'result_{model_name}.pkl')
     with open(result_output_path, 'wb') as f:
       pickle.dump(np_prediction_result, f, protocol=4)
+    
+    continue
 
     # Add the predicted LDDT in the b-factor column.
     # Note that higher predicted LDDT value means higher model confidence.
@@ -342,6 +344,8 @@ def predict_structure(
         file_id=str(model_index),
         model_type=model_type,
     )
+  
+  return
 
   # Rank by model confidence.
   ranked_order = [

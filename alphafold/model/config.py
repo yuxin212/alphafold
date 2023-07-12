@@ -39,24 +39,24 @@ def model_config(name: str) -> ml_collections.ConfigDict:
 MODEL_PRESETS = {
     'monomer': (
         'model_1',
-        'model_2',
-        'model_3',
-        'model_4',
-        'model_5',
+        # 'model_2',
+        # 'model_3',
+        # 'model_4',
+        # 'model_5',
     ),
     'monomer_ptm': (
         'model_1_ptm',
-        'model_2_ptm',
-        'model_3_ptm',
-        'model_4_ptm',
-        'model_5_ptm',
+        # 'model_2_ptm',
+        # 'model_3_ptm',
+        # 'model_4_ptm',
+        # 'model_5_ptm',
     ),
     'multimer': (
         'model_1_multimer_v3',
-        'model_2_multimer_v3',
-        'model_3_multimer_v3',
-        'model_4_multimer_v3',
-        'model_5_multimer_v3',
+        # 'model_2_multimer_v3',
+        # 'model_3_multimer_v3',
+        # 'model_4_multimer_v3',
+        # 'model_5_multimer_v3',
     ),
 }
 MODEL_PRESETS['monomer_casp14'] = MODEL_PRESETS['monomer']
@@ -155,7 +155,7 @@ CONFIG = ml_collections.ConfigDict({
             },
             'max_extra_msa': 1024,
             'msa_cluster_features': True,
-            'num_recycle': 3,
+            'num_recycle': 0,
             'reduce_msa_clusters_by_max_templates': False,
             'resample_msa_in_recycling': True,
             'template_features': [
@@ -455,7 +455,7 @@ CONFIG = ml_collections.ConfigDict({
                 'weight': 2.0
             },
         },
-        'num_recycle': 3,
+        'num_recycle': 0,
         'resample_msa_in_recycling': True
     },
 })
@@ -687,7 +687,7 @@ CONFIG_MULTIMER = ml_collections.ConfigDict({
             }
         },
         'num_ensemble_eval': 1,
-        'num_recycle': 20,
+        'num_recycle': 0,
         # A negative value indicates that no early stopping will occur, i.e.
         # the model will always run `num_recycle` number of recycling
         # iterations.  A positive value will enable early stopping if the
